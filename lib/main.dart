@@ -15,9 +15,11 @@ class homepage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: BMICal(),
       theme: ThemeData.dark().copyWith(
-        primaryColor: Color(0xFF0A0E21),
-        scaffoldBackgroundColor: Color(0xFF0A0E21),
-       ),
+          primaryColor: Color(0xFF0A0E21),
+          scaffoldBackgroundColor: Color(0xFF0A0E21),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Color(0xFF0A0E21),
+          )),
     );
   }
 }
