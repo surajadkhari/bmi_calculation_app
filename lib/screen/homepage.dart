@@ -9,6 +9,8 @@ const bottomContainerColour = Color(0xFFEB1555);
 const activeCardcolour = Color(0xFF1D1E33);
 const inactiveCardcolour = Color(0xFF111328);
 
+enum Gender { male, female }
+
 class BMICal extends StatefulWidget {
   const BMICal({Key? key}) : super(key: key);
 
@@ -20,8 +22,8 @@ class _BMICalState extends State<BMICal> {
   Color maleCardColur = inactiveCardcolour;
   Color femaleCardColur = inactiveCardcolour;
 
-  void updateColour(int gender) {
-    if (gender == 1) {
+  void updateColour(Gender selectedgender) {
+    if (selectedgender == Gender.male) {
       if (maleCardColur == inactiveCardcolour) {
         maleCardColur = activeCardcolour;
         femaleCardColur = inactiveCardcolour;
@@ -29,7 +31,7 @@ class _BMICalState extends State<BMICal> {
         maleCardColur = inactiveCardcolour;
       }
     }
-    if (gender == 2) {
+    if (selectedgender == Gender.female) {
       if (femaleCardColur == inactiveCardcolour) {
         femaleCardColur = activeCardcolour;
         maleCardColur = inactiveCardcolour;
@@ -55,7 +57,7 @@ class _BMICalState extends State<BMICal> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        updateColour(1);
+                        updateColour(Gender.male);
                       });
                     },
                     child: ReuseableCard(
@@ -71,7 +73,7 @@ class _BMICalState extends State<BMICal> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        updateColour(2);
+                        updateColour(Gender.female);
                       });
                     },
                     child: ReuseableCard(
