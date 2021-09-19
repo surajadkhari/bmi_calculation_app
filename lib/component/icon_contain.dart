@@ -1,3 +1,4 @@
+import 'package:bmi_app/screen/const.dart';
 import 'package:flutter/material.dart';
 
 class IconContain extends StatelessWidget {
@@ -13,13 +14,7 @@ class IconContain extends StatelessWidget {
           icon,
           size: 80,
         ),
-        Text(
-          gender!,
-          style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF8D8E98),
-          ),
-        )
+        Text(gender!, style: kLabelTextStyle)
       ],
     );
   }

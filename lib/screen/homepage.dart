@@ -1,13 +1,12 @@
+import 'package:bmi_app/component/bottom_button.dart';
+import 'package:bmi_app/component/icon_contain.dart';
+import 'package:bmi_app/component/reuseable_card.dart';
+import 'package:bmi_app/screen/const.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'icon_contain.dart';
-import 'reuseable_card.dart';
-
-const bottomContainerHeight = 80.00;
-const bottomContainerColour = Color(0xFFEB1555);
-const activeCardcolour = Color(0xFF1D1E33);
-const inactiveCardcolour = Color(0xFF111328);
+import '../component/round_icon_button.dart';
 
 enum Gender { male, female }
 
@@ -19,27 +18,32 @@ class BMICal extends StatefulWidget {
 }
 
 class _BMICalState extends State<BMICal> {
-  Color maleCardColur = inactiveCardcolour;
-  Color femaleCardColur = inactiveCardcolour;
+  Color maleCardColur = kInactiveCardcolour;
+  Color femaleCardColur = kInactiveCardcolour;
 
-  void updateColour(Gender selectedgender) {
-    if (selectedgender == Gender.male) {
-      if (maleCardColur == inactiveCardcolour) {
-        maleCardColur = activeCardcolour;
-        femaleCardColur = inactiveCardcolour;
-      } else {
-        maleCardColur = inactiveCardcolour;
-      }
-    }
-    if (selectedgender == Gender.female) {
-      if (femaleCardColur == inactiveCardcolour) {
-        femaleCardColur = activeCardcolour;
-        maleCardColur = inactiveCardcolour;
-      } else {
-        femaleCardColur = inactiveCardcolour;
-      }
-    }
-  }
+  Gender? selectedGender;
+  int height = 180;
+  int weight = 60;
+  int age = 25;
+
+  // void updateColour(Gender selectedgender) {
+  //   if (selectedgender == Gender.male) {
+  //     if (maleCardColur == inactiveCardcolour) {
+  //       maleCardColur = activeCardcolour;
+  //       femaleCardColur = inactiveCardcolour;
+  //     } else {
+  //       maleCardColur = inactiveCardcolour;
+  //     }
+  //   }
+  //   if (selectedgender == Gender.female) {
+  //     if (femaleCardColur == inactiveCardcolour) {
+  //       femaleCardColur = activeCardcolour;
+  //       maleCardColur = inactiveCardcolour;
+  //     } else {
+  //       femaleCardColur = inactiveCardcolour;
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,39 +53,40 @@ class _BMICalState extends State<BMICal> {
         centerTitle: true,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: ReuseableCard(
+                    onPress: () {
                       setState(() {
-                        updateColour(Gender.male);
+                        selectedGender = Gender.male;
                       });
                     },
-                    child: ReuseableCard(
-                      colour: maleCardColur,
-                      cardChild: IconContain(
-                        icon: FontAwesomeIcons.mars,
-                        gender: "MALE",
-                      ),
+                    colour: selectedGender == Gender.male
+                        ? kActiveCardcolour
+                        : kInactiveCardcolour,
+                    cardChild: IconContain(
+                      icon: FontAwesomeIcons.mars,
+                      gender: "MALE",
                     ),
                   ),
                 ),
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {
+                  child: ReuseableCard(
+                    onPress: () {
                       setState(() {
-                        updateColour(Gender.female);
+                        selectedGender = Gender.female;
                       });
                     },
-                    child: ReuseableCard(
-                      colour: femaleCardColur,
-                      cardChild: IconContain(
-                        icon: FontAwesomeIcons.venus,
-                        gender: "FEMALE",
-                      ),
+                    colour: selectedGender == Gender.female
+                        ? kActiveCardcolour
+                        : kInactiveCardcolour,
+                    cardChild: IconContain(
+                      icon: FontAwesomeIcons.venus,
+                      gender: "FEMALE",
                     ),
                   ),
                 )
@@ -90,26 +95,144 @@ class _BMICalState extends State<BMICal> {
           ),
           Expanded(
               child: ReuseableCard(
-            colour: activeCardcolour,
+            colour: kActiveCardcolour,
+            cardChild: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "HEIGHT",
+                  style: kLabelTextStyle,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(
+                      height.toString(),
+                      style: kLableNumberStyle,
+                    ),
+                    Text(
+                      "cm",
+                      style: kLabelTextStyle,
+                    )
+                  ],
+                ),
+                SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: Colors.white,
+                      inactiveTrackColor: Color(0xFF8D8E98),
+                      overlayColor: Color(0x29EB1555),
+                      thumbColor: Color(0xFFEB1555),
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+                      overlayShape: RoundSliderOverlayShape(overlayRadius: 30)),
+                  child: Slider(
+                    value: height.toDouble(),
+                    min: 120,
+                    max: 220,
+                    onChanged: (double newValue) {
+                      setState(() {
+                        height = newValue.round();
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
           )),
           Expanded(
             child: Row(
               children: [
                 Expanded(
                     child: ReuseableCard(
-                  colour: activeCardcolour,
+                  colour: kActiveCardcolour,
+                  cardChild: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "WEIGHT",
+                        style: kLabelTextStyle,
+                      ),
+                      Text(
+                        weight.toString(),
+                        style: kLableNumberStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RoundButtonIcon(
+                            icon: FontAwesomeIcons.plus,
+                            onpressed: () {
+                              setState(() {
+                                weight++;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          RoundButtonIcon(
+                            icon: FontAwesomeIcons.minus,
+                            onpressed: () {
+                              setState(() {
+                                weight--;
+                              });
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 )),
                 Expanded(
                     child: ReuseableCard(
-                  colour: activeCardcolour,
+                  colour: kActiveCardcolour,
+                  cardChild: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "AGE",
+                        style: kLabelTextStyle,
+                      ),
+                      Text(
+                        age.toString(),
+                        style: kLableNumberStyle,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RoundButtonIcon(
+                            icon: FontAwesomeIcons.plus,
+                            onpressed: () {
+                              setState(() {
+                                age++;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          RoundButtonIcon(
+                            icon: FontAwesomeIcons.minus,
+                            onpressed: () {
+                              setState(() {
+                                age--;
+                              });
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ))
               ],
             ),
           ),
-          Container(
-            color: bottomContainerColour,
-            height: bottomContainerHeight,
-            width: double.infinity,
+          BottomButton(
+            ontap: () {
+              Navigator.pushNamed(context, "/resultpage");
+            },
+            buttonTitle: "Calculate",
           ),
         ],
       ),
