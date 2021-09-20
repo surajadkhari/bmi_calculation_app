@@ -1,7 +1,9 @@
+import 'package:bmi_app/calculation/calculation.dart';
 import 'package:bmi_app/component/bottom_button.dart';
 import 'package:bmi_app/component/icon_contain.dart';
 import 'package:bmi_app/component/reuseable_card.dart';
 import 'package:bmi_app/screen/const.dart';
+import 'package:bmi_app/screen/resultpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -230,7 +232,19 @@ class _BMICalState extends State<BMICal> {
           ),
           BottomButton(
             ontap: () {
-              Navigator.pushNamed(context, "/resultpage");
+              Calculation calc = Calculation(height: height, weight: weight);
+              
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResultPage(
+                    bmiValue: calc.calculateBMI(),
+                    bmiFeedback: calc.bmiFeedback(),
+                    bmiResult: calc.bmiResult(),
+                  ),
+                ),
+              );
             },
             buttonTitle: "Calculate",
           ),

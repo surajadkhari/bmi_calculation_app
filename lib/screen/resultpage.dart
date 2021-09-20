@@ -5,7 +5,14 @@ import 'package:bmi_app/screen/const.dart';
 import 'package:flutter/material.dart';
 
 class ResultPage extends StatelessWidget {
-  const ResultPage({Key? key}) : super(key: key);
+  ResultPage(
+      {required this.bmiFeedback,
+      required this.bmiResult,
+      required this.bmiValue});
+
+  final String bmiValue;
+  final String bmiResult;
+  final String bmiFeedback;
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +43,18 @@ class ResultPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Normal",
+                    bmiResult,
+                    // "hi",
                     style: kResultTextStlye,
                   ),
                   Text(
-                    "26",
+                    bmiValue,
                     style: kBMITextvalueStlye,
                   ),
                   Text(
-                    "BMI Value is low , eat more",
+                    // "hi",
+                    bmiFeedback,
+                    textAlign: TextAlign.center,
                     style: kBMIvaluedescriptiovalueStlye,
                   ),
                 ],
@@ -52,7 +62,7 @@ class ResultPage extends StatelessWidget {
             ),
           ),
           BottomButton(
-            buttonTitle: "RE -CALCULATE",
+            buttonTitle: "RE-CALCULATE",
             ontap: () {
               Navigator.pop(context);
             },

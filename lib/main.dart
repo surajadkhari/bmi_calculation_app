@@ -13,11 +13,11 @@ class homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // initialRoute: "/",
-      routes: {
-        // "/": (context) => homepage(),
-        "/resultpage": (context) => ResultPage()
-      },
+    
+      // routes: {
+      //   // "/": (context) => homepage(),
+      //   "/resultpage": (context) => ResultPage()
+      // },
       debugShowCheckedModeBanner: false,
       home: BMICal(),
       theme: ThemeData.dark().copyWith(
